@@ -36,7 +36,6 @@ int ShuzuMing()
 	//第0个一维数组的数组名为a[0]
 	printf("a = %p\n", a);
 	printf("a[0] = %p\n", a[0]);
-	printf("a[0] = %p\n", a[0]);
 	//测二维数组所占内存空间，有3个一维数组，每个一维数组的空间为4*4
 	//sizeof(a) = 3 * 4 * 4 = 48
 	printf("sizeof(a) = %d\n", sizeof(a));
