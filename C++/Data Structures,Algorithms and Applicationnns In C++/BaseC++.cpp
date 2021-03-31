@@ -50,26 +50,63 @@ int main()
 //8.动态分配存储空间操作符new和删除符Delete
 void NewAndDelete()
 {
-    int n=10;
+    int n = 10;
     int *y = new int(10);    //y是一个指针，*y=10
     delete y;                //释放空间
     float *x = new float[n]; //中括号表示创建一个数组
     delete[] x;              //释放数组x
 }
 //9.创建二维数组时必须制定第二维的大小
-//利用动态创建数组
+//动态创建二维数组
 template <class T>
-bool make2dArray(T ** &x,int numberOfRows, int numberOfColumns)
+bool make2dArray(T **&x, int numberOfRows, int numberOfColumns)
 {
-    try{
-        x=new T*[numberOfRows];
-        for (int i = 0; i < numberOfRows; i++)
-        {
-            x[i]=new int [numberOfColumns];
-        }
-        return true;
+    x = new T *[numberOfRows];
+    for (int i = 0; i < numberOfRows; i++)
+    {
+        x[i] = new T[numberOfColumns];
     }
-    catch(bad_alloc){
-        return false;
+    return true;
+}
+//删除二维数组
+template <class T>
+void delete2dArray(T **&x, int numberOfRows)
+{
+    for (int i = 0; i < numberOfRows; i++) //删除行组
+    {
+        delete[] x[i];
     }
+    delete[] x; //删除指针
+    x = NULL;
+}
+enum signType
+{
+    plus,
+    minus
+};
+//currency类举例说明
+class currency
+{
+public:
+    currency(signType theSign = ::plus,
+             unsigned long theDollars = 0,
+             unsigned int theCents = 0);
+    ~currency();
+    void setValue(signType, unsigned long, unsigned int);
+    void setValue(double);
+    signType getSign() const { return sign; }//常量函数：类的成员函数后面加const，表明这个函数不会改变调用对象的值。
+    unsigned long getDollars() const { return dollars; }
+    unsigned int getCents() const { return cents; }
+    currency add(const currency &) const;
+    currency &increment(const currency &);
+    void output() const;
+
+private:
+    signType sign;
+    unsigned long dollars;
+    unsigned int cents;
+};
+void TestCurrency01(){
+    currency f,g(::plus,3,45),h(::minus,10);//三种实例化的方式,使用参数默认值
+    currency *m=new currency(::plus,8,12);
 }
