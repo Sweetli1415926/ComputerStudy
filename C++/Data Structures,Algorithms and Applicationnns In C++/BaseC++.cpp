@@ -124,7 +124,7 @@ void TestCurrency01()
 {
     currency f, g(::plus, 3, 45), h(::minus, 10); //三种实例化的方式,使用参数默认值
     currency *m = new currency(::plus, 8, 12);
-    f.add(g);
+    h.add(g);
 }
 //13.在类声明体外实现函数,类名:函数
 currency::currency(signType theSign, unsigned long theDollars, unsigned int theCents)
@@ -155,20 +155,63 @@ void currency::setValue(double theAmount)
 }
 currency currency::add(const currency &x) const
 {
-    long a1,a2,a3;
+    long a1, a2, a3;
     currency result;
-    a1=dollars*100+cents;
-    if(sign==::minus){
-        a1=-a1;
+    a1 = dollars * 100 + cents;
+    if (sign == ::minus)
+    {
+        a1 = -a1;
     }
-    a2=x.dollars*100+cents;
-    if(x.sign==::minus){
-        a2=-a2;
+    a2 = x.dollars * 100 + x.cents;
+    if (x.sign == ::minus)
+    {
+        a2 = -a2;
     }
-    a3=a1+a2;
-    result.cents=3;
-    result.setValue(a3/100);
+    a3 = a1 + a2;
+    result.dollars = a3 / 100; //只保留整数部分
+    result.cents = a3 - result.dollars * 100;
     return result;
+}
+//14.add返回对象的值，而increment返回对象的引用
+currency &currency::increment(const currency &x)
+{
+    *this = add(x);
+    return *this;
+}
+
+void currency::output() const
+{
+    if (sign == ::minus)
+        cout << '-';
+    cout << '$' << dollars << '.';
+    cout << cents;
+}
+
+#include <iostream>
+int TestCurrency02()
+{
+    currency g, h(::plus, 3, 50), i, j;
+    g.setValue(::minus, 2, 25);
+    i.setValue(-6.45);
+    j = h.add(g);
+    h.output();
+    cout << "+";
+    g.output();
+    cout << "=";
+    j.output();
+    cout << endl;
+    j = i.add(g).add(h);
+    j = i.increment(g).add(h);
+    cout << "Attempmting to initialize with cents 152" << endl;
+    try
+    {
+        i.setValue(::plus, 3, 152);
+    }
+    catch(illegalParameterValue e)
+    {
+        cout<<"Caught thrown exception"<<endl;
+        //e.outputMessage();
+    }
 }
 int main()
 {
