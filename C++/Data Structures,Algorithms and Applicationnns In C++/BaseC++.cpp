@@ -207,11 +207,56 @@ int TestCurrency02()
     {
         i.setValue(::plus, 3, 152);
     }
-    catch(illegalParameterValue e)
+    catch (illegalParameterValue e)
     {
-        cout<<"Caught thrown exception"<<endl;
+        cout << "Caught thrown exception" << endl;
         //e.outputMessage();
     }
+}
+//15.新currency，类内部实现更多细节，外部调用更简单
+
+class Newcurrency
+{
+public:
+    Newcurrency(signType theSign = ::plus, unsigned long theDollars = 0, unsigned int theCents = 0);
+    ~Newcurrency();
+    void setValue(signType, unsigned long, unsigned int);
+    void setValue(double);
+    signType getSign() const
+    {
+        if (Amount < 0)
+            return ::minus;
+        else
+            return ::plus;
+    }
+    unsigned long getDollars() const
+    {
+        if (Amount < 0)
+            return -Amount / 100;
+        else
+            return Amount / 100;
+    };
+    unsigned int getCents() const
+    {
+        if (Amount < 0)
+            return -Amount - getDollars() * 100;
+        else
+            return Amount - getDollars() * 100;
+    }
+    Newcurrency add(const Newcurrency &) const;
+    Newcurrency &increment(const Newcurrency &x)
+    {
+        Amount += x.Amount;
+        return *this;
+    }
+    void output() const;
+
+private:
+    long Amount;
+};
+//16.操作符重载 扩大C++操作符的使用范围 使得对象也可以用+符号来相加
+Newcurrency Newcurrency::operator+(const Newcurrency &x) const
+{
 }
 int main()
 {
