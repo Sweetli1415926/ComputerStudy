@@ -243,21 +243,31 @@ public:
         else
             return Amount - getDollars() * 100;
     }
-    Newcurrency add(const Newcurrency &) const;
+    Newcurrency add(const Newcurrency &) const;//add相当于是+，increment相当于是+=
     Newcurrency &increment(const Newcurrency &x)
     {
         Amount += x.Amount;
         return *this;
     }
     void output() const;
-
+    Newcurrency operator+(const Newcurrency &) const;
+    Newcurrency& operator+=(const Newcurrency& x){
+        Amount+=x.Amount;
+        return *this;
+    }
 private:
     long Amount;
 };
 //16.操作符重载 扩大C++操作符的使用范围 使得对象也可以用+符号来相加
 Newcurrency Newcurrency::operator+(const Newcurrency &x) const
 {
+    Newcurrency result;
+    result.Amount=Amount+x.Amount;
+    return result;
 }
+#ifndef currrency.h //防止头文件重复引用编译，如果没定义
+#define currency.j//那么定义
+#endif//结束
 int main()
 {
     TestCurrency01();
