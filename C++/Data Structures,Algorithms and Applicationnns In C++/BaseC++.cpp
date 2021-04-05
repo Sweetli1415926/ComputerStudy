@@ -335,6 +335,34 @@ void permutations(T list[], int k, int m)
         }
     }
 }
+//20.STL模板
+//accumulate累加
+template <class T>
+T STL_sum(T a[], int n)
+{
+    T theSum = 0;
+    return accumulate(a, a + n, theSum);
+}
+//累乘
+template <class T>
+T product(T a[], int n)
+{
+    T theProduct = 1;
+    return accumulate(a, a + n, theProduct, multiplies<T>());
+}
+//拷贝顺序表，求排列
+template <class T>
+void  STL_permutations(T list[], int k, int m)
+{
+    //生成list[k:m]的所有排列 元素个数为m-k+1;
+    //假设k<=m;
+    do
+    {
+        copy(list, list + m + 1, ostream_iterator<T>(cout, ""));
+        cout << endl;
+    }
+    while(next_permutation(list, list + m + 1));
+}
 int main()
 {
     string a[3] = {"a", "b", "c"};
