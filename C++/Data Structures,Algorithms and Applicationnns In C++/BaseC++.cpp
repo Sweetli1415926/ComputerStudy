@@ -212,6 +212,7 @@ int TestCurrency02()
         cout << "Caught thrown exception" << endl;
         //e.outputMessage();
     }
+    return 0;
 }
 //15.新currency，类内部实现更多细节，外部调用更简单
 
@@ -243,7 +244,8 @@ public:
         else
             return Amount - getDollars() * 100;
     }
-    Newcurrency add(const Newcurrency &) const;//add相当于是+，increment相当于是+=
+
+    Newcurrency add(const Newcurrency &) const; //add相当于是+，increment相当于是+=
     Newcurrency &increment(const Newcurrency &x)
     {
         Amount += x.Amount;
@@ -251,25 +253,92 @@ public:
     }
     void output() const;
     Newcurrency operator+(const Newcurrency &) const;
-    Newcurrency& operator+=(const Newcurrency& x){
-        Amount+=x.Amount;
+    Newcurrency &operator+=(const Newcurrency &x)
+    {
+        Amount += x.Amount;
         return *this;
     }
+
 private:
     long Amount;
 };
+Newcurrency::Newcurrency(signType theSign, unsigned long theDollars, unsigned int theCents)
+{
+    setValue(theSign, theDollars, theCents);
+}
+void Newcurrency::setValue(signType, unsigned long, unsigned int)
+{
+}
 //16.操作符重载 扩大C++操作符的使用范围 使得对象也可以用+符号来相加
 Newcurrency Newcurrency::operator+(const Newcurrency &x) const
 {
     Newcurrency result;
-    result.Amount=Amount+x.Amount;
+    result.Amount = Amount + x.Amount;
     return result;
 }
-#ifndef currrency.h //防止头文件重复引用编译，如果没定义
-#define currency.j//那么定义
-#endif//结束
+//17.#ifndef
+//#ifndef currrency.h //防止头文件重复引用编译，如果没定义
+//#define currency .h //那么定义
+//#endif              //结束
+
+//18.递归函数
+//n!
+int factorial(int n)
+{
+    if (n <= 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return n * factorial(n - 1);
+    }
+}
+//累加
+template <class T>
+T sum(T a[], int n)
+{
+    T result;
+    for (int i = 0; i < n; i++) //返回的是a[0,n-1]数组元素的和
+    {
+        result += a[i];
+    }
+    return result;
+}
+//递归求和
+template <class T>
+T rSum(T a[], int n)
+{
+    if (n > 0)
+    {
+        return rSum(a, n - 1) + a[n];
+    }
+    return 0;
+}
+//19.使用递归函数生成排列
+#include <iterator>
+template <class T>
+void permutations(T list[], int k, int m)
+{
+    if (k == m) //仅有一个排列，输出它
+    {
+        copy(list, list + m + 1, ostream_iterator<T>(cout, ""));
+        cout << endl;
+    }
+    else
+    {
+        for (int i = k; i <= m; i++)
+        {
+            swap(list[k], list[i]);
+            permutations(list, k + 1, m);
+            swap(list[k], list[i]);
+        }
+    }
+}
 int main()
 {
-    TestCurrency01();
+    string a[3] = {"a", "b", "c"};
+    //TestCurrency01();
+    permutations(a, 0, 2);
     return 0;
 }
