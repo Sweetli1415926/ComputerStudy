@@ -4,6 +4,9 @@
         "iostream": "cpp",
         "vector": "cpp",
         "xutility": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "algorithm": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp"
     }
 }

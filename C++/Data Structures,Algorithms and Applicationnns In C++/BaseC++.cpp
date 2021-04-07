@@ -258,7 +258,6 @@ public:
         Amount += x.Amount;
         return *this;
     }
-
 private:
     long Amount;
 };
@@ -280,7 +279,6 @@ Newcurrency Newcurrency::operator+(const Newcurrency &x) const
 //#ifndef currrency.h //防止头文件重复引用编译，如果没定义
 //#define currency .h //那么定义
 //#endif              //结束
-
 //18.递归函数
 //n!
 int factorial(int n)
