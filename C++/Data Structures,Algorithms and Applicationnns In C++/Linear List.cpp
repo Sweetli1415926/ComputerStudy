@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <vector>
+
 using namespace std;
 //1.抽象类
 template <class T>
@@ -165,6 +167,37 @@ public:
 protected:
     T *position;
 };
+//vector
+template <class T>
+class vectorList : public linearList<T>
+{
+public:
+    vectorList(int initialCapacity = 10);
+    vectorList(const vectorList<T> &);
+    ~vectorList() { delete element; }
+    bool empty() { return element->empty(); }
+    int size() { return (int)element->size; }
+    T &get(int theIndex) const;
+    int indexOf(const T &theElement) const;
+    void erase(int theIndex);
+    void insert(int theIndex, const T &theElement);
+    void output(ostream &out) const;
+    int capacity() const { return (int)element->capacity(); }
+    //线性表的起始和结束位置的迭代器
+    typedef typename vector<T>::iterator iterator;
+    iterator begin() { return element->begin(); }
+    iterator end() { return element->end(); }
+
+protected:
+    void checkIndex(int theIndex) const;
+    vector<T> *element;
+};
+template <class T>
+vectorList<T>::vectorList(int initialCapacity)
+{
+    element =new vector<T>;
+}
+
 int main()
 {
     return 0;
