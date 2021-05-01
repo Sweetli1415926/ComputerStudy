@@ -115,7 +115,7 @@ public:
     currency &increment(const currency &);
     void output() const;
 
-private:
+private: 
     signType sign;
     unsigned long dollars;
     unsigned int cents;
