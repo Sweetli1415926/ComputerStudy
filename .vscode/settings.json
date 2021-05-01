@@ -2,6 +2,11 @@
     "files.associations": {
         "stdio.h": "c",
         "iostream": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "xutility": "cpp",
+        "xstring": "cpp",
+        "algorithm": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp"
     }
 }

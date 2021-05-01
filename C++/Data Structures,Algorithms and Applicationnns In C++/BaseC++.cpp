@@ -115,7 +115,7 @@ public:
     currency &increment(const currency &);
     void output() const;
 
-private:
+private: 
     signType sign;
     unsigned long dollars;
     unsigned int cents;
@@ -207,14 +207,164 @@ int TestCurrency02()
     {
         i.setValue(::plus, 3, 152);
     }
-    catch(illegalParameterValue e)
+    catch (illegalParameterValue e)
     {
-        cout<<"Caught thrown exception"<<endl;
+        cout << "Caught thrown exception" << endl;
         //e.outputMessage();
     }
+    return 0;
+}
+//15.新currency，类内部实现更多细节，外部调用更简单
+
+class Newcurrency
+{
+public:
+    Newcurrency(signType theSign = ::plus, unsigned long theDollars = 0, unsigned int theCents = 0);
+    ~Newcurrency();
+    void setValue(signType, unsigned long, unsigned int);
+    void setValue(double);
+    signType getSign() const
+    {
+        if (Amount < 0)
+            return ::minus;
+        else
+            return ::plus;
+    }
+    unsigned long getDollars() const
+    {
+        if (Amount < 0)
+            return -Amount / 100;
+        else
+            return Amount / 100;
+    };
+    unsigned int getCents() const
+    {
+        if (Amount < 0)
+            return -Amount - getDollars() * 100;
+        else
+            return Amount - getDollars() * 100;
+    }
+
+    Newcurrency add(const Newcurrency &) const; //add相当于是+，increment相当于是+=
+    Newcurrency &increment(const Newcurrency &x)
+    {
+        Amount += x.Amount;
+        return *this;
+    }
+    void output() const;
+    Newcurrency operator+(const Newcurrency &) const;
+    Newcurrency &operator+=(const Newcurrency &x)
+    {
+        Amount += x.Amount;
+        return *this;
+    }
+private:
+    long Amount;
+};
+Newcurrency::Newcurrency(signType theSign, unsigned long theDollars, unsigned int theCents)
+{
+    setValue(theSign, theDollars, theCents);
+}
+void Newcurrency::setValue(signType, unsigned long, unsigned int)
+{
+}
+//16.操作符重载 扩大C++操作符的使用范围 使得对象也可以用+符号来相加
+Newcurrency Newcurrency::operator+(const Newcurrency &x) const
+{
+    Newcurrency result;
+    result.Amount = Amount + x.Amount;
+    return result;
+}
+//17.#ifndef
+//#ifndef currrency.h //防止头文件重复引用编译，如果没定义
+//#define currency .h //那么定义
+//#endif              //结束
+//18.递归函数
+//n!
+int factorial(int n)
+{
+    if (n <= 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return n * factorial(n - 1);
+    }
+}
+//累加
+template <class T>
+T sum(T a[], int n)
+{
+    T result;
+    for (int i = 0; i < n; i++) //返回的是a[0,n-1]数组元素的和
+    {
+        result += a[i];
+    }
+    return result;
+}
+//递归求和
+template <class T>
+T rSum(T a[], int n)
+{
+    if (n > 0)
+    {
+        return rSum(a, n - 1) + a[n];
+    }
+    return 0;
+}
+//19.使用递归函数生成排列
+#include <iterator>
+template <class T>
+void permutations(T list[], int k, int m)
+{
+    if (k == m) //仅有一个排列，输出它
+    {
+        copy(list, list + m + 1, ostream_iterator<T>(cout, ""));
+        cout << endl;
+    }
+    else
+    {
+        for (int i = k; i <= m; i++)
+        {
+            swap(list[k], list[i]);
+            permutations(list, k + 1, m);
+            swap(list[k], list[i]);
+        }
+    }
+}
+//20.STL模板
+//accumulate累加
+template <class T>
+T STL_sum(T a[], int n)
+{
+    T theSum = 0;
+    return accumulate(a, a + n, theSum);
+}
+//累乘
+template <class T>
+T product(T a[], int n)
+{
+    T theProduct = 1;
+    return accumulate(a, a + n, theProduct, multiplies<T>());
+}
+//拷贝顺序表，求排列
+template <class T>
+void  STL_permutations(T list[], int k, int m)
+{
+    //生成list[k:m]的所有排列 元素个数为m-k+1;
+    //假设k<=m;
+    do
+    {
+        copy(list, list + m + 1, ostream_iterator<T>(cout, ""));
+        cout << endl;
+    }
+    while(next_permutation(list, list + m + 1));
 }
 int main()
 {
-    TestCurrency01();
+    string a[3] = {"a", "b", "c"};
+    //TestCurrency01();
+    permutations(a, 0, 2);
     return 0;
 }
