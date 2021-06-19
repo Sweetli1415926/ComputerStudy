@@ -173,13 +173,17 @@ void Del_X_2(LinkList &L, ElemType x)
 }
 //3.L为带头结点的单链表,反向输出每个结点的值
 //单链表反向输出,可以考虑递归
-void Show_reverse_1(LinkList &L)
+void Show_reverse_Part(LinkList L)
 {
 
     if (L->next != NULL)
         Show_reverse_1(L->next);
-    //if (L != NULL)//防止链表为空
     printf("%d", L->data);
+}
+void Show_reverse_1(LinkList L)
+{
+    if (L != NULL)
+        Show_reverse_Part(L->next);
 }
 void Show_reverse(LinkList &L)
 {
@@ -216,6 +220,44 @@ void Del_Min(LinkList &L)
     LNode *s = preMin->next;
     preMin->next = s->next;
     free(s);
+}
+//4.逆转链表
+//通过调转指针
+void Reverse_1(LinkList &L)
+{
+    LNode *p = L->next, *q, *pre = NULL;
+    while (p != NULL)
+    {
+        q = p;
+        p = p->next;
+        q->next = pre;
+        pre = q;
+    }
+    L->next = pre;
+}
+//通过头插法重拼元素
+void Reverse_2(LinkList &L)
+{
+    LNode *p = L->next, *r;
+    L->next = NULL;
+    while (p != NULL)
+    {
+        p->next = L->next;
+        L->next = p;
+        r = p->next;
+        p = r;
+    }
+}
+void SortAscend(LinkList &L)
+{
+    LNode *p = L->next;
+    LNode *r=p->next;
+    p->next=NULL;
+    p=r;
+    while (p != NULL)
+    {
+        r=p->next;
+    }
 }
 int main()
 {
