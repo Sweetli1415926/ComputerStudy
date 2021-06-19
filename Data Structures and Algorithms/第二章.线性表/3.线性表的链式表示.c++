@@ -263,10 +263,10 @@ void SortAscend(LinkList &L)
 int main()
 {
     LinkList L = (LinkList)malloc(sizeof(LNode));
-    List_HeadInsert(L);
-    Show_reverse_1(L);
-    Del_Min(L);
-    Show_reverse(L);
+    //List_HeadInsert(L);
+    //Show_reverse_1(L);
+    //Del_Min(L);
+    //Show_reverse(L);
     return 0;
     //SeqList L;
     //3.C的初始动态分配语句为
