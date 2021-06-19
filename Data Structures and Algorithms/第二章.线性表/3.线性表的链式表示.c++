@@ -221,7 +221,7 @@ void Del_Min(LinkList &L)
     preMin->next = s->next;
     free(s);
 }
-//4.逆转链表
+//5-1.逆转链表
 //通过调转指针
 void Reverse_1(LinkList &L)
 {
@@ -235,7 +235,7 @@ void Reverse_1(LinkList &L)
     }
     L->next = pre;
 }
-//通过头插法重拼元素
+//5-2通过头插法重拼元素
 void Reverse_2(LinkList &L)
 {
     LNode *p = L->next, *r;
@@ -248,6 +248,7 @@ void Reverse_2(LinkList &L)
         p = r;
     }
 }
+//6.使元素有序递增
 void SortAscend(LinkList &L)
 {
     LNode *p = L->next;
