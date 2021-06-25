@@ -133,6 +133,15 @@ typedef struct
     int next;
 } SLinkList[MaxSize];
 //应用题
+
+void Print_L(LinkList L)
+{
+    while (L->next != NULL)
+    {
+        L = L->next;
+        printf("%d", L->data);
+    }
+}
 //1.设计递归算法,删除不带头结点的单链表L中所有值为x的结点
 void Del_X(LinkList &L, ElemType x)
 {
@@ -173,6 +182,12 @@ void Del_X_2(LinkList &L, ElemType x)
 }
 //3.L为带头结点的单链表,反向输出每个结点的值
 //单链表反向输出,可以考虑递归
+
+void Show_reverse_1(LinkList L)
+{
+    //if (L != NULL)
+    //Show_reverse_Part(L->next);
+}
 void Show_reverse_Part(LinkList L)
 {
 
@@ -180,11 +195,7 @@ void Show_reverse_Part(LinkList L)
         Show_reverse_1(L->next);
     printf("%d", L->data);
 }
-void Show_reverse_1(LinkList L)
-{
-    if (L != NULL)
-        Show_reverse_Part(L->next);
-}
+
 void Show_reverse(LinkList &L)
 {
     LNode *p = L->next, *q, *pre = NULL;
@@ -251,19 +262,65 @@ void Reverse_2(LinkList &L)
 //6.使元素有序递增
 void SortAscend(LinkList &L)
 {
-    LNode *p = L->next;
-    LNode *r=p->next;
-    p->next=NULL;
-    p=r;
+    LNode *p = L->next, *pre;
+    LNode *r = p->next;
+    p->next = NULL;
+    p = r;
     while (p != NULL)
     {
-        r=p->next;
+        r = p->next;
+        pre = L;
+        while (pre->next != NULL && pre->next->data < p->data)
+        {
+            pre = pre->next;
+        }
+        p->next = pre->next;
+        pre->next = p;
+        p = r;
     }
+}
+//7.删除介于ab之间的值
+void Del_a_b(LinkList &L, int a, int b)
+{
+    LNode *p = L->next;
+    LNode *pre = L;
+    while (p != NULL)
+    {
+        if (p->data > a && p->data < b)
+        {
+            pre->next = p->next;
+            p = p->next;
+            free(p);
+        }
+        else
+        {
+            pre = p;
+            p = p->next;
+        }
+    }
+}
+//8.找出两个表的公共结点
+LNode *Find_SameNode(LinkList L1, LinkList L2)
+{
+    LNode *p = L1->next;
+    LNode *q = L2->next;
+    while (p != NULL)
+    {
+        while (q != NULL)
+        {
+            if (q == p)
+                return q;
+            q = q->next;
+        }
+        p = p->next;
+    }
+    return NULL;
 }
 int main()
 {
     LinkList L = (LinkList)malloc(sizeof(LNode));
-    //List_HeadInsert(L);
+    List_HeadInsert(L);
+    SortAscend(L);
     //Show_reverse_1(L);
     //Del_Min(L);
     //Show_reverse(L);
