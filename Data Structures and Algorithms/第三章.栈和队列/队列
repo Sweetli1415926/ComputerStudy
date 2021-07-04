@@ -10,4 +10,16 @@
          队首指针进1:Q.front=(Q.front+1)%MaxSize
          队尾指针进1:Q.rear=(Q.rear+1)%MaxSize
          队列长度:(Q.rear+MaxSize-Q.front)%MaxSize
-         
+6.循环队列判断队空和堆满的条件
+  Q.front=Q.rear
+  队空队满都成立
+  解决方法:(1最常用)牺牲一个单元区分队空队满,即队尾指针的下一个位置是队头作为队满的标志
+           队满条件:(Q.rear+1)%MaxSize==Q.front
+           队空条件:Q.front==Q.rear
+           队列中元素的个数:(Q.rear+Q.front-MaxSize)%MaxSize
+           (2)类型中增设表示元素个数的数据成员
+           队空条件:Q.size==0
+           队满条件:Q.rear==MaxSize
+           (3)类型中增设tag数据成员
+           tag=0,若因删除元素使得Q.front==Q.rear,则队空
+           tag=1,若因插入元素使得Q.front==Q.rear,则队满
