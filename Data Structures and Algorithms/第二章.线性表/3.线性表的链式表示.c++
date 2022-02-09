@@ -3,7 +3,7 @@
 #define MaxSize 12
 typedef int ElemType;
 
-//2.单链表节点类型的描述
+// 2.单链表节点类型的描述
 typedef struct LNode
 {
     ElemType data;      //数据域
@@ -31,7 +31,6 @@ LinkList List_HeadInsert(LinkList &L)
 //尾插法建立链表
 LinkList List_TailInsert(LinkList &L)
 {
-
     int x;
     L = (LinkList)malloc(sizeof(LNode));
     LNode *s, *r = L;
@@ -113,17 +112,17 @@ typedef struct DNode
 //双链表的插入操作
 void InsertDElem()
 {
-    //s->next=p->next
-    //s->prior=p
-    //s->next->prior=p
-    //p-next=s
+    // s->next=p->next
+    // s->prior=p
+    // s->next->prior=p
+    // p-next=s
 }
 void DeleteDElem()
 {
-    //q=p->next
-    //p->next=q->next
-    //q->next->prior=p
-    //free(q);
+    // q=p->next
+    // p->next=q->next
+    // q->next->prior=p
+    // free(q);
 }
 
 //静态链表的结构
@@ -142,7 +141,7 @@ void Print_L(LinkList L)
         printf("%d", L->data);
     }
 }
-//1.设计递归算法,删除不带头结点的单链表L中所有值为x的结点
+// 1.设计递归算法,删除不带头结点的单链表L中所有值为x的结点
 void Del_X(LinkList &L, ElemType x)
 {
     LNode *p;
@@ -158,7 +157,7 @@ void Del_X(LinkList &L, ElemType x)
     else
         Del_X(L->next, x);
 }
-//2.在带头结点的单链表L中,删除所有值为x的结点
+// 2.在带头结点的单链表L中,删除所有值为x的结点
 void Del_X_2(LinkList &L, ElemType x)
 {
     LNode *p = L->next, *q, *pre = L;
@@ -180,13 +179,13 @@ void Del_X_2(LinkList &L, ElemType x)
         }
     }
 }
-//3.L为带头结点的单链表,反向输出每个结点的值
+// 3.L为带头结点的单链表,反向输出每个结点的值
 //单链表反向输出,可以考虑递归
 
 void Show_reverse_1(LinkList L)
 {
-    //if (L != NULL)
-    //Show_reverse_Part(L->next);
+    // if (L != NULL)
+    // Show_reverse_Part(L->next);
 }
 void Show_reverse_Part(LinkList L)
 {
@@ -213,7 +212,7 @@ void Show_reverse(LinkList &L)
         printf("%d", L->data);
     }
 }
-//4.带头结点的单链表L中删除最小值的高效算法(最小值唯一)
+// 4.带头结点的单链表L中删除最小值的高效算法(最小值唯一)
 void Del_Min(LinkList &L)
 {
     LNode *pre = L, *q = L->next, *preMin;
@@ -232,7 +231,7 @@ void Del_Min(LinkList &L)
     preMin->next = s->next;
     free(s);
 }
-//5-1.逆转链表
+// 5-1.逆转链表
 //通过调转指针
 void Reverse_1(LinkList &L)
 {
@@ -246,7 +245,7 @@ void Reverse_1(LinkList &L)
     }
     L->next = pre;
 }
-//5-2通过头插法重拼元素
+// 5-2通过头插法重拼元素
 void Reverse_2(LinkList &L)
 {
     LNode *p = L->next, *r;
@@ -259,7 +258,7 @@ void Reverse_2(LinkList &L)
         p = r;
     }
 }
-//6.使元素有序递增
+// 6.使元素有序递增
 void SortAscend(LinkList &L)
 {
     LNode *p = L->next, *pre;
@@ -279,7 +278,7 @@ void SortAscend(LinkList &L)
         p = r;
     }
 }
-//7.删除介于ab之间的值
+// 7.删除介于ab之间的值
 void Del_a_b(LinkList &L, int a, int b)
 {
     LNode *p = L->next;
@@ -299,7 +298,7 @@ void Del_a_b(LinkList &L, int a, int b)
         }
     }
 }
-//8.找出两个表的公共结点
+// 8.找出两个表的公共结点
 LNode *Find_SameNode(LinkList L1, LinkList L2)
 {
     LNode *p = L1->next;
@@ -321,16 +320,16 @@ int main()
     LinkList L = (LinkList)malloc(sizeof(LNode));
     List_HeadInsert(L);
     SortAscend(L);
-    //Show_reverse_1(L);
-    //Del_Min(L);
-    //Show_reverse(L);
+    // Show_reverse_1(L);
+    // Del_Min(L);
+    // Show_reverse(L);
     return 0;
-    //SeqList L;
-    //3.C的初始动态分配语句为
-    //L.data = (ElemType *)malloc(sizeof(ElemType) * InitSize);
-    //4.C++的初始动态分配语句为
-    //L.data = new ElemType[InitSize];
+    // SeqList L;
+    // 3.C的初始动态分配语句为
+    // L.data = (ElemType *)malloc(sizeof(ElemType) * InitSize);
+    // 4.C++的初始动态分配语句为
+    // L.data = new ElemType[InitSize];
 
-    //SqlList L2 = {{1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6}, 12};
-    //Del_Duplicate(L2);
+    // SqlList L2 = {{1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6}, 12};
+    // Del_Duplicate(L2);
 }
